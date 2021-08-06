@@ -1,0 +1,45 @@
+#!/usr/bin/env node
+
+const path = require('path')
+const glob = require('glob')
+const argv = require('minimist')(process.argv.slice(2))
+const fs = require('fs')
+const util = require('util')
+const toLineRows = require('./toLineRows')
+const sortRows = require('./sortRows')
+const { Parser } = require('acorn')
+
+const startTag = '<script>'
+const endTag = '</script>'
+
+const neat = (filePath, content) => {
+  const scriptStart = content.indexOf(startTag) + startTag.length
+  const scriptEnd = content.indexOf(endTag)
+
+  const beforeJs = content.slice(0, scriptStart)
+  const code = content.slice(scriptStart, scriptEnd)
+  const afterJs = content.slice(scriptEnd)
+
+  const res = Parser.parse(code, {
+    ecmaVersion: 2020,
+    sourceType: 'module'
+  })
+
+  const lineRows = toLineRows(res.body, code)
+  const sortedRows = sortRows(lineRows)
+
+  const fileContent = beforeJs + sortedRows.map(row => row.line).join('') + afterJs
+  fs.writeFileSync(filePath, fileContent, 'utf8')
+}
+
+const cwd = process.cwd()
+const filePaths = argv._.map(pattern => {
+  return glob.sync(pattern)
+    .map(p => path.resolve(cwd, p))
+})
+.flat()
+
+filePaths.forEach(filePath => {
+  const content = fs.readFileSync(filePath, 'utf8')
+  neat(filePath, content)
+})
