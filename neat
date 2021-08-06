@@ -40,8 +40,11 @@ const neat = (filePath, content) => {
 
 const cwd = process.cwd()
 const filePaths = argv._.map(pattern => {
-  return glob.sync(pattern)
-    .map(p => path.resolve(cwd, p))
+  if (pattern.includes('*')) {
+    return glob.sync(pattern)
+      .map(p => path.resolve(cwd, p))
+  }
+  return path.resolve(cwd, pattern)
 })
 .flat()
 
