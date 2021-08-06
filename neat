@@ -13,18 +13,24 @@ const startTag = '<script>'
 const endTag = '</script>'
 
 const neat = (filePath, content) => {
-  const scriptStart = content.indexOf(startTag) + startTag.length
-  const scriptEnd = content.indexOf(endTag)
+  const ext = path.extname(filePath)
 
-  const beforeJs = content.slice(0, scriptStart)
+  let scriptStart = 0
+  let scriptEnd = content.length
+  let beforeJs = ''
+  let afterJs = ''
+
+  if (ext === '.vue') {
+    scriptStart = content.indexOf(startTag) + startTag.length
+    scriptEnd = content.indexOf(endTag)
+    beforeJs = content.slice(0, scriptStart)
+    afterJs = content.slice(scriptEnd)
+  }
   const code = content.slice(scriptStart, scriptEnd)
-  const afterJs = content.slice(scriptEnd)
-
   const res = Parser.parse(code, {
     ecmaVersion: 2020,
     sourceType: 'module'
   })
-
   const lineRows = toLineRows(res.body, code)
   const sortedRows = sortRows(lineRows)
 
