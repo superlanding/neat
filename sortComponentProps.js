@@ -12,7 +12,8 @@ const getSortedObjValues = (group, code) => {
   }
   const trueValues = sort(group.true)
   const falseValues = sort(group.false)
-  const props = [...trueValues, ...falseValues]
+  const undefinedValues = sort(group.undefined)
+  const props = [...trueValues, ...falseValues, ...undefinedValues]
 
   const commaProps = props.map((p, i) => {
     // no comma dangle
