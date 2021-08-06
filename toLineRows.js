@@ -26,7 +26,8 @@ const toLineRows = context => {
     index += 1
     pos = end + 1
   })
-  return rows
+  context.rows = rows
+  return context
 }
 
 module.exports = toLineRows

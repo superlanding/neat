@@ -44,8 +44,9 @@ const sortComponentProps = (valueNode, code) => {
   return nextCode
 }
 
-const baseSortComponentProps = rows => {
-  return rows.map(row => {
+const baseSortComponentProps = context => {
+  const { rows } = context
+  context.rows = rows.map(row => {
     const { node } = row
     if (! node) {
       return row
@@ -53,11 +54,15 @@ const baseSortComponentProps = rows => {
     if ((node.type === 'ExportDefaultDeclaration') &&
       (get(node, 'declaration.type') === 'ObjectExpression')) {
         const code = row.line
-        const res = Parser.parse(code, {
-          ecmaVersion: 2020,
-          sourceType: 'module'
-        })
-        const declaration = res.body[0].declaration
+        const res = context.parse(code)
+        const nodes = res.body
+        if (nodes.length === 0) {
+          return row
+        }
+        const { declaration } = nodes[0]
+        if (! declaration) {
+          return row
+        }
         const componentProp = declaration.properties.find(p => p.key.name === 'components')
         if (! componentProp) {
           return row
@@ -67,6 +72,7 @@ const baseSortComponentProps = rows => {
     }
     return row
   })
+  return context
 }
 
 module.exports = baseSortComponentProps

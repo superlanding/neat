@@ -6,6 +6,7 @@ const glob = require('glob')
 const path = require('path')
 const util = require('util')
 const { Parser } = require('acorn')
+const compose = require('./compose')
 const sortComponentProps = require('./sortComponentProps')
 const sortImports = require('./sortImports')
 const toLineRows = require('./toLineRows')
@@ -28,11 +29,13 @@ const neat = context => {
     beforeJs = content.slice(0, scriptStart)
     afterJs = content.slice(scriptEnd)
   }
-  const lineRows = toLineRows(context)
-  const sortedRows = sortImports(lineRows)
-  const nextSortedRows = sortComponentProps(sortedRows)
-  const fileContent = beforeJs + nextSortedRows.map(row => row.line).join('') + afterJs
+  const resultContext = compose(
+    toLineRows,
+    sortImports,
+    sortComponentProps
+  )(context)
 
+  const fileContent = beforeJs + resultContext.rows.map(row => row.line).join('') + afterJs
   fs.writeFileSync(context.filePath, fileContent, 'utf8')
 }
 
