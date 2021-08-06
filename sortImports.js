@@ -3,7 +3,7 @@ const sortBy = require('lodash.sortby')
 const keyBy = require('lodash.keyby')
 const { IMPORT_TYPES, IMPORT_TYPE_MAP } = require('./consts')
 
-const sortRows = rows => {
+const sortImports = rows => {
 
   const rowMap = keyBy(rows, 'id')
   const typeRows = rows.filter(row => IMPORT_TYPE_MAP[row.importType])
@@ -25,4 +25,4 @@ const sortRows = rows => {
   return sortBy(rows, 'index')
 }
 
-module.exports = sortRows
+module.exports = sortImports
