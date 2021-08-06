@@ -10,34 +10,31 @@ const sortComponentProps = require('./sortComponentProps')
 const sortImports = require('./sortImports')
 const toLineRows = require('./toLineRows')
 
-const startTag = '<script>'
-const endTag = '</script>'
+const neat = context => {
 
-const neat = (filePath, content) => {
-  const ext = path.extname(filePath)
+  const { content } = context
+  const isVue = context.ext === '.vue'
 
-  let scriptStart = 0
-  let scriptEnd = content.length
   let beforeJs = ''
   let afterJs = ''
+  let code = content
 
-  if (ext === '.vue') {
-    scriptStart = content.indexOf(startTag) + startTag.length
-    scriptEnd = content.indexOf(endTag)
+  if (isVue) {
+    const startTag = '<script>'
+    const endTag = '</script>'
+    const scriptStart = content.indexOf(startTag) + startTag.length
+    const scriptEnd = content.indexOf(endTag)
+    code = content.slice(scriptStart, scriptEnd)
     beforeJs = content.slice(0, scriptStart)
     afterJs = content.slice(scriptEnd)
   }
-  const code = content.slice(scriptStart, scriptEnd)
-  const res = Parser.parse(code, {
-    ecmaVersion: 2020,
-    sourceType: 'module'
-  })
+  const res = context.parse(code)
   const lineRows = toLineRows(res.body, code)
   const sortedRows = sortImports(lineRows)
   const nextSortedRows = sortComponentProps(sortedRows)
-
   const fileContent = beforeJs + nextSortedRows.map(row => row.line).join('') + afterJs
-  fs.writeFileSync(filePath, fileContent, 'utf8')
+
+  fs.writeFileSync(context.filePath, fileContent, 'utf8')
 }
 
 const cwd = process.cwd()
@@ -52,5 +49,17 @@ const filePaths = argv._.map(pattern => {
 
 filePaths.forEach(filePath => {
   const content = fs.readFileSync(filePath, 'utf8')
-  neat(filePath, content)
+  const ext = path.extname(filePath)
+  const parserContext = {
+    filePath,
+    ext,
+    source: content,
+    content,
+    argv,
+    parse: code => Parser.parse(code, {
+      ecmaVersion: 2020,
+      sourceType: 'module'
+    })
+  }
+  neat(parserContext)
 })
