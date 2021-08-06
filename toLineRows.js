@@ -2,12 +2,16 @@ const getImportType = require('./getImportType')
 
 const getId = index => `#${index}`
 
-const toLineRows = (nodes, code) => {
+const toLineRows = context => {
+
+  const code = context.content
+  const res = context.parse(code)
+
   const rows = []
   let pos = 0
   let index = 0
 
-  nodes.forEach(node => {
+  res.body.forEach(node => {
     const { start, end } = node
     if (pos < start) {
       const line = code.slice(pos, start)

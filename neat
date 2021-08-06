@@ -24,12 +24,11 @@ const neat = context => {
     const endTag = '</script>'
     const scriptStart = content.indexOf(startTag) + startTag.length
     const scriptEnd = content.indexOf(endTag)
-    code = content.slice(scriptStart, scriptEnd)
+    context.content = content.slice(scriptStart, scriptEnd)
     beforeJs = content.slice(0, scriptStart)
     afterJs = content.slice(scriptEnd)
   }
-  const res = context.parse(code)
-  const lineRows = toLineRows(res.body, code)
+  const lineRows = toLineRows(context)
   const sortedRows = sortImports(lineRows)
   const nextSortedRows = sortComponentProps(sortedRows)
   const fileContent = beforeJs + nextSortedRows.map(row => row.line).join('') + afterJs
