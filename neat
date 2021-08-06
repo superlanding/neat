@@ -58,7 +58,8 @@ filePaths.forEach(filePath => {
     parse: code => Parser.parse(code, {
       ecmaVersion: 2020,
       sourceType: 'module'
-    })
+    }),
+    rows: []
   }
   neat(parserContext)
 })
