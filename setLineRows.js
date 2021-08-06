@@ -2,7 +2,7 @@ const getImportType = require('./getImportType')
 
 const getId = index => `#${index}`
 
-const toLineRows = context => {
+const setLineRows = context => {
 
   const code = context.content
   const res = context.parse(code)
@@ -30,4 +30,4 @@ const toLineRows = context => {
   return context
 }
 
-module.exports = toLineRows
+module.exports = setLineRows

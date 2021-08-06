@@ -9,7 +9,7 @@ const { Parser } = require('acorn')
 const compose = require('./compose')
 const sortComponentProps = require('./sortComponentProps')
 const sortImports = require('./sortImports')
-const toLineRows = require('./toLineRows')
+const setLineRows = require('./setLineRows')
 
 const neat = context => {
 
@@ -30,7 +30,7 @@ const neat = context => {
     afterJs = content.slice(scriptEnd)
   }
   const resultContext = compose(
-    toLineRows,
+    setLineRows,
     sortImports,
     sortComponentProps
   )(context)
