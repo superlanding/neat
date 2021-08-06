@@ -6,7 +6,7 @@ const argv = require('minimist')(process.argv.slice(2))
 const fs = require('fs')
 const util = require('util')
 const toLineRows = require('./toLineRows')
-const sortRows = require('./sortRows')
+const sortImports = require('./sortImports')
 const { Parser } = require('acorn')
 
 const startTag = '<script>'
@@ -32,7 +32,7 @@ const neat = (filePath, content) => {
     sourceType: 'module'
   })
   const lineRows = toLineRows(res.body, code)
-  const sortedRows = sortRows(lineRows)
+  const sortedRows = sortImports(lineRows)
 
   const fileContent = beforeJs + sortedRows.map(row => row.line).join('') + afterJs
   fs.writeFileSync(filePath, fileContent, 'utf8')
