@@ -25,6 +25,7 @@ const getSortedObjValues = (group, code) => {
   const arr = ['{', ...commaProps, '  }']
 
   return arr.map((p, i) => {
+    // no newline for closing curly brace
     if (i === (arr.length - 1)) {
       return p
     }
