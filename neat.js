@@ -1,15 +1,18 @@
-#!/usr/bin/env node
+#!/usr/bin/env node --experimental-specifier-resolution=node
+import {
+  Parser,
+  fs,
+  glob,
+  minimist,
+  path,
+  util
+} from './utils/index'
+import compose from './compose'
+import sortComponentProps from './sortComponentProps'
+import sortImports from './sortImports'
+import setLineRows from './setLineRows'
 
-const argv = require('minimist')(process.argv.slice(2))
-const fs = require('fs')
-const glob = require('glob')
-const path = require('path')
-const util = require('util')
-const { Parser } = require('acorn')
-const compose = require('./compose')
-const sortComponentProps = require('./sortComponentProps')
-const sortImports = require('./sortImports')
-const setLineRows = require('./setLineRows')
+const argv = minimist(process.argv.slice(2))
 
 const neat = context => {
 

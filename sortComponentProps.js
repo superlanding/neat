@@ -1,7 +1,4 @@
-const get = require('lodash.get')
-const groupBy = require('lodash.groupby')
-const sortBy = require('lodash.sortby')
-const { Parser } = require('acorn')
+import { get, groupBy, sortBy } from './utils/index'
 
 // four spaces
 const indent = '    '
@@ -46,7 +43,7 @@ const sortComponentProps = (valueNode, code) => {
   return nextCode
 }
 
-const baseSortComponentProps = context => {
+export default function baseSortComponentProps(context) {
   const { rows } = context
   context.rows = rows.map(row => {
     const { node } = row
@@ -76,5 +73,3 @@ const baseSortComponentProps = context => {
   })
   return context
 }
-
-module.exports = baseSortComponentProps

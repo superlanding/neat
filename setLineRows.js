@@ -1,8 +1,8 @@
-const getImportType = require('./getImportType')
+import getImportType from './getImportType'
 
 const getId = index => `#${index}`
 
-const setLineRows = context => {
+export default function setLineRows(context) {
 
   const code = context.content
   const res = context.parse(code)
@@ -29,5 +29,3 @@ const setLineRows = context => {
   context.rows = rows
   return context
 }
-
-module.exports = setLineRows

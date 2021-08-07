@@ -1,9 +1,7 @@
-const groupBy = require('lodash.groupby')
-const sortBy = require('lodash.sortby')
-const keyBy = require('lodash.keyby')
-const { IMPORT_TYPES, IMPORT_TYPE_MAP } = require('./consts')
+import { groupBy, sortBy, keyBy } from './utils/index'
+import { IMPORT_TYPES, IMPORT_TYPE_MAP } from './consts'
 
-const sortImports = context => {
+export default function sortImports(context) {
 
   const { rows } = context
   const rowMap = keyBy(rows, 'id')
@@ -26,5 +24,3 @@ const sortImports = context => {
   context.rows = sortBy(rows, 'index')
   return context
 }
-
-module.exports = sortImports

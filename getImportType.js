@@ -1,4 +1,4 @@
-const {
+import {
   IMPORT_TYPE_CONTAINER,
   IMPORT_TYPE_COMPONENT,
   IMPORT_TYPE_MIXIN,
@@ -7,9 +7,9 @@ const {
   IMPORT_TYPE_UTIL,
   IMPORT_TYPE_CONST,
   IMPORT_TYPE_OTHER
-} = require('./consts')
+} from './consts'
 
-const getImportType = (node, line) => {
+export default function getImportType(node, line) {
   if (node.type !== 'ImportDeclaration') {
     return ''
   }
@@ -36,5 +36,3 @@ const getImportType = (node, line) => {
   }
   return IMPORT_TYPE_OTHER
 }
-
-module.exports = getImportType
