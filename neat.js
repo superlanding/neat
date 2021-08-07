@@ -54,6 +54,7 @@ const cwd = process.cwd()
 const argv = minimist(process.argv.slice(2))
 const filePaths = argv._.map(filename => path.resolve(cwd, filename))
   .flat()
+  .filter(p => (! p.includes('*')))
 
 filePaths.forEach(filePath => {
   const content = fs.readFileSync(filePath, 'utf8')
