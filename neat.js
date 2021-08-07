@@ -11,7 +11,20 @@ import sortComponentProps from './sortComponentProps'
 import sortImports from './sortImports'
 import setLineRows from './setLineRows'
 
-const argv = minimist(process.argv.slice(2))
+const getComposedFns = context => {
+  const { argv } = context
+  if (argv['sort-imports']) {
+    return [setLineRows, sortImports]
+  }
+  if (argv['sort-component-props']) {
+    return [setLineRows, sortComponentProps]
+  }
+  return [
+    setLineRows,
+    sortImports,
+    sortComponentProps
+  ]
+}
 
 const neat = context => {
 
@@ -31,19 +44,14 @@ const neat = context => {
     beforeJs = content.slice(0, scriptStart)
     afterJs = content.slice(scriptEnd)
   }
-  console.log('here', context.argv)
-  process.exit(1)
-  const resultContext = compose(
-    setLineRows,
-    sortImports,
-    sortComponentProps
-  )(context)
-
+  const fns = getComposedFns(context)
+  const resultContext = compose(...fns)(context)
   const fileContent = beforeJs + resultContext.rows.map(row => row.line).join('') + afterJs
   fs.writeFileSync(context.filePath, fileContent, 'utf8')
 }
 
 const cwd = process.cwd()
+const argv = minimist(process.argv.slice(2))
 const filePaths = argv._.map(filename => path.resolve(cwd, filename))
   .flat()
 
