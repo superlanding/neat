@@ -8,9 +8,9 @@ import {
   util
 } from './utils/index'
 import compose from './compose'
+import setLineRows from './setLineRows'
 import sortComponentProps from './sortComponentProps'
 import sortImports from './sortImports'
-import setLineRows from './setLineRows'
 
 const getComposedFns = context => {
   const { argv } = context
