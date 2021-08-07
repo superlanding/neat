@@ -1,4 +1,15 @@
 {
+  "name": "neat",
+  "version": "1.0.0",
+  "engines": {
+    "node": ">=14.17.4"
+  },
+  "main": "neat.js",
+  "author": "kmsheng",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^7.32.0"
+  },
   "dependencies": {
     "acorn": "8.4.1",
     "glob": "7.1.7",
@@ -8,13 +19,5 @@
     "lodash.sortby": "4.7.0",
     "lodash.uniqueid": "4.0.1",
     "minimist": "1.2.5"
-  },
-  "name": "neat",
-  "version": "1.0.0",
-  "main": "neat.js",
-  "author": "kmsheng",
-  "license": "MIT",
-  "devDependencies": {
-    "eslint": "^7.32.0"
   }
 }
