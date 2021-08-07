@@ -6,16 +6,18 @@ import path from 'path'
 import keyBy from 'lodash.keyby'
 import sortBy from 'lodash.sortby'
 import util from 'util'
-import { Parser } from 'acorn'
+import { Parser as acorn } from 'acorn'
+import { parse as acornLoose } from 'acorn-loose'
 
 export {
-  Parser,
+  acorn,
+  acornLoose,
   fs,
   get,
   groupBy,
-  minimist,
   keyBy,
-  sortBy,
+  minimist,
   path,
+  sortBy,
   util
 }

@@ -1,6 +1,7 @@
 #!/usr/bin/env node --experimental-specifier-resolution=node
 import {
-  Parser,
+  acorn,
+  acornLoose,
   fs,
   minimist,
   path,
@@ -59,13 +60,14 @@ const filePaths = argv._.map(filename => path.resolve(cwd, filename))
 filePaths.forEach(filePath => {
   const content = fs.readFileSync(filePath, 'utf8')
   const ext = path.extname(filePath)
+  const parse = argv.loose ? acornLoose : acorn.parse.bind(acorn)
   const parserContext = {
     filePath,
     ext,
     source: content,
     content,
     argv,
-    parse: code => Parser.parse(code, {
+    parse: code => parse(code, {
       ecmaVersion: 2020,
       sourceType: 'module'
     }),
