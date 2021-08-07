@@ -61,7 +61,7 @@ const filePaths = argv._
 filePaths.forEach(filePath => {
   const content = fs.readFileSync(filePath, 'utf8')
   const ext = path.extname(filePath)
-  const parse = argv.loose ? acornLoose : acorn.parse.bind(acorn)
+  const parse = argv.loose ? acornLoose : acorn
   const parserContext = {
     filePath,
     ext,

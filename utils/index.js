@@ -6,7 +6,7 @@ import path from 'path'
 import keyBy from 'lodash.keyby'
 import sortBy from 'lodash.sortby'
 import util from 'util'
-import { Parser as acorn } from 'acorn'
+import { parse as acorn } from 'acorn'
 import { parse as acornLoose } from 'acorn-loose'
 
 export {
