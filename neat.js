@@ -2,7 +2,6 @@
 import {
   Parser,
   fs,
-  glob,
   minimist,
   path,
   util
@@ -32,6 +31,8 @@ const neat = context => {
     beforeJs = content.slice(0, scriptStart)
     afterJs = content.slice(scriptEnd)
   }
+  console.log('here', context.argv)
+  process.exit(1)
   const resultContext = compose(
     setLineRows,
     sortImports,
@@ -43,14 +44,8 @@ const neat = context => {
 }
 
 const cwd = process.cwd()
-const filePaths = argv._.map(pattern => {
-  if (pattern.includes('*')) {
-    return glob.sync(pattern)
-      .map(p => path.resolve(cwd, p))
-  }
-  return path.resolve(cwd, pattern)
-})
-.flat()
+const filePaths = argv._.map(filename => path.resolve(cwd, filename))
+  .flat()
 
 filePaths.forEach(filePath => {
   const content = fs.readFileSync(filePath, 'utf8')

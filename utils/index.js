@@ -1,6 +1,5 @@
 import fs from 'fs'
 import get from 'lodash.get'
-import glob from 'glob'
 import groupBy from 'lodash.groupby'
 import minimist from 'minimist'
 import path from 'path'
@@ -13,7 +12,6 @@ export {
   Parser,
   fs,
   get,
-  glob,
   groupBy,
   minimist,
   keyBy,
