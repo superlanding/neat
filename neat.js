@@ -30,12 +30,11 @@ const getComposedFns = context => {
 const neat = context => {
 
   const { content } = context
-  const isVue = context.ext === '.vue'
 
   let beforeJs = ''
   let afterJs = ''
 
-  if (isVue) {
+  if (context.isVue) {
     const startTag = '<script>'
     const endTag = '</script>'
     const scriptStart = content.indexOf(startTag) + startTag.length
@@ -73,6 +72,7 @@ filePaths.forEach(filePath => {
   const parserContext = {
     filePath,
     ext,
+    isVue: (ext === '.vue'),
     source: content,
     content,
     options,
