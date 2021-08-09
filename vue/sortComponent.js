@@ -1,4 +1,4 @@
-import { get, groupBy, sortBy } from './utils/index'
+import { get, groupBy, sortBy } from '../utils/index'
 
 // four spaces
 const indent = '    '
@@ -43,7 +43,7 @@ const sortComponentProps = (valueNode, code) => {
   return nextCode
 }
 
-export default function baseSortComponentProps(context) {
+export default function sortComponent(context) {
   const { rows } = context
   context.rows = rows.map(row => {
     const { node } = row
