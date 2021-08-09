@@ -9,11 +9,11 @@
   "author": "kmsheng",
   "license": "MIT",
   "devDependencies": {
-    "eslint": "^7.32.0"
+    "eslint": "7.32.0"
   },
   "dependencies": {
     "acorn": "8.4.1",
-    "acorn-loose": "^8.1.0",
+    "acorn-loose": "8.1.0",
     "commander": "8.1.0",
     "glob": "7.1.7",
     "lodash.get": "4.4.2",
