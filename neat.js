@@ -54,7 +54,10 @@ const neat = context => {
   const fns = getComposedFns(context)
   const resultContext = compose(...fns)(context)
   const fileContent = beforeJs + resultContext.rows.map(row => row.line).join('') + afterJs
-  fs.writeFileSync(context.filePath, fileContent, 'utf8')
+
+  if (context.source !== fileContent) {
+    fs.writeFileSync(context.filePath, fileContent, 'utf8')
+  }
 }
 
 program
