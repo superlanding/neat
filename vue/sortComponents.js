@@ -1,5 +1,6 @@
 import { groupBy, sortBy } from '../utils/index'
 import getVueProp from './getVueProp'
+import getObjValueStr from './getObjValueStr'
 
 // four spaces
 const indent = '    '
@@ -13,23 +14,7 @@ const getSortedObjValues = (group, code) => {
   const undefinedValues = sort(group.undefined)
   const props = [...trueValues, ...falseValues, ...undefinedValues]
 
-  const commaProps = props.map((p, i) => {
-    // no comma dangle
-    if (i === (props.length - 1)) {
-      return p
-    }
-    return p + ','
-  })
-
-  const arr = ['{', ...commaProps, '  }']
-
-  return arr.map((p, i) => {
-    // no newline for closing curly brace
-    if (i === (arr.length - 1)) {
-      return p
-    }
-    return p + `\n`
-  })
+  return getObjValueStr(props)
 }
 
 const sortComponentProps = (valueNode, code) => {
