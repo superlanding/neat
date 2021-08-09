@@ -1,4 +1,5 @@
-import { get, groupBy, sortBy } from '../utils/index'
+import { groupBy, sortBy } from '../utils/index'
+import getVueProp from './getVueProp'
 
 // four spaces
 const indent = '    '
@@ -46,28 +47,15 @@ const sortComponentProps = (valueNode, code) => {
 export default function sortComponents(context) {
   const { rows } = context
   context.rows = rows.map(row => {
-    const { node } = row
-    if (! node) {
+    const componentProp = getVueProp({
+      row,
+      context,
+      prop: 'components'
+    })
+    if (componentProp) {
+      const nextCode = sortComponentProps(componentProp.value, row.line)
+      row.line = nextCode
       return row
-    }
-    if ((node.type === 'ExportDefaultDeclaration') &&
-      (get(node, 'declaration.type') === 'ObjectExpression')) {
-        const code = row.line
-        const res = context.parse(code)
-        const nodes = res.body
-        if (nodes.length === 0) {
-          return row
-        }
-        const { declaration } = nodes[0]
-        if (! declaration) {
-          return row
-        }
-        const componentProp = declaration.properties.find(p => p.key.name === 'components')
-        if (! componentProp) {
-          return row
-        }
-        const nextCode = sortComponentProps(componentProp.value, code)
-        row.line = nextCode
     }
     return row
   })
