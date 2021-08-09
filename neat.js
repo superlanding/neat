@@ -12,6 +12,7 @@ import setLineRows from './setLineRows'
 import sortVueComponents from './vue/sortComponents'
 import sortVueProps from './vue/sortProps'
 import sortVueComputedProps from './vue/sortComputedProps'
+import sortVueMethods from './vue/sortMethods'
 import sortImports from './sortImports'
 
 const getComposedFns = context => {
@@ -28,13 +29,17 @@ const getComposedFns = context => {
   if (options.computedProps && isVue) {
     return [setLineRows, sortVueComputedProps]
   }
+  if (options.methods && isVue) {
+    return [setLineRows, sortVueMethods]
+  }
   if (isVue) {
     return [
       setLineRows,
       sortImports,
       sortVueComponents,
       sortVueProps,
-      sortVueComputedProps
+      sortVueComputedProps,
+      sortVueMethods
     ]
   }
   return [setLineRows, sortImports]
@@ -70,6 +75,7 @@ program
   .option('-c, --component-props', 'sort vue components props')
   .option('-p, --props', 'sort vue props')
   .option('-d, --computed-props', 'sort vue computed props')
+  .option('-m, --methods', 'sort vue methods props')
   .option('-l, --loose', 'use the error-tolerant version of parser')
 
 const { argv } = process
