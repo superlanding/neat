@@ -43,7 +43,7 @@ const sortComponentProps = (valueNode, code) => {
   return nextCode
 }
 
-export default function sortComponent(context) {
+export default function sortComponents(context) {
   const { rows } = context
   context.rows = rows.map(row => {
     const { node } = row

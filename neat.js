@@ -9,7 +9,7 @@ import {
 } from './utils/index'
 import compose from './compose'
 import setLineRows from './setLineRows'
-import sortVueComponent from './vue/sortComponent'
+import sortVueComponents from './vue/sortComponents'
 import sortImports from './sortImports'
 
 const getComposedFns = context => {
@@ -18,13 +18,13 @@ const getComposedFns = context => {
     return [setLineRows, sortImports]
   }
   if (options.componentProps && isVue) {
-    return [setLineRows, sortVueComponent]
+    return [setLineRows, sortVueComponents]
   }
   if (isVue) {
     return [
       setLineRows,
       sortImports,
-      sortVueComponent
+      sortVueComponents
     ]
   }
   return [setLineRows, sortImports]
