@@ -16,7 +16,8 @@ Usage: neat [options]
 
 Options:
   -i, --imports          sort js import declarations
-  -c, --component-props  sort vue component props
+  -c, --component-props  sort vue components props
+  -p, --props            sort vue props
   -l, --loose            use the error-tolerant version of parser
   -h, --help             display help for command
 ```
