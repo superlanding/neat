@@ -16,4 +16,5 @@ export default function getObjValueStr(props) {
     }
     return p + `\n`
   })
+  .join('')
 }

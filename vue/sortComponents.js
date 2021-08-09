@@ -22,7 +22,7 @@ const sortComponentProps = (valueNode, code) => {
   const group = groupBy(valueNode.properties, 'shorthand')
 
   const before = code.slice(0, start)
-  const middle = getSortedObjValues(group, code).join('')
+  const middle = getSortedObjValues(group, code)
   const after = code.slice(end)
 
   const nextCode = before + middle + after
