@@ -10,6 +10,7 @@ import {
 import compose from './compose'
 import setLineRows from './setLineRows'
 import sortVueComponents from './vue/sortComponents'
+import sortVueProps from './vue/sortProps'
 import sortImports from './sortImports'
 
 const getComposedFns = context => {
@@ -20,11 +21,15 @@ const getComposedFns = context => {
   if (options.componentProps && isVue) {
     return [setLineRows, sortVueComponents]
   }
+  if (options.props && isVue) {
+    return [setLineRows, sortVueProps]
+  }
   if (isVue) {
     return [
       setLineRows,
       sortImports,
-      sortVueComponents
+      sortVueComponents,
+      sortVueProps
     ]
   }
   return [setLineRows, sortImports]
@@ -55,6 +60,7 @@ const neat = context => {
 program
   .option('-i, --imports', 'sort js import declarations')
   .option('-c, --component-props', 'sort vue component props')
+  .option('-p, --props', 'sort vue props')
   .option('-l, --loose', 'use the error-tolerant version of parser')
 
 const { argv } = process
