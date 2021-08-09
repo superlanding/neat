@@ -59,7 +59,7 @@ const neat = context => {
 
 program
   .option('-i, --imports', 'sort js import declarations')
-  .option('-c, --component-props', 'sort vue component props')
+  .option('-c, --component-props', 'sort vue components props')
   .option('-p, --props', 'sort vue props')
   .option('-l, --loose', 'use the error-tolerant version of parser')
 
