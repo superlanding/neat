@@ -6,7 +6,6 @@ import {
   minimist,
   path,
   program,
-  util
 } from './utils/index'
 import compose from './compose'
 import setLineRows from './setLineRows'
@@ -35,7 +34,6 @@ const neat = context => {
 
   let beforeJs = ''
   let afterJs = ''
-  let code = content
 
   if (isVue) {
     const startTag = '<script>'
