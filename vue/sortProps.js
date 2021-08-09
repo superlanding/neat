@@ -1,4 +1,4 @@
-import { get, groupBy, sortBy } from '../utils/index'
+import { groupBy, sortBy } from '../utils/index'
 import getVueProp from './getVueProp'
 import getObjValueStr from './getObjValueStr'
 
