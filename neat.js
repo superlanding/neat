@@ -13,18 +13,21 @@ import sortComponentProps from './sortComponentProps'
 import sortImports from './sortImports'
 
 const getComposedFns = context => {
-  const { options } = context
+  const { options, isVue } = context
   if (options.imports) {
     return [setLineRows, sortImports]
   }
-  if (options.componentProps) {
+  if (options.componentProps && isVue) {
     return [setLineRows, sortComponentProps]
   }
-  return [
-    setLineRows,
-    sortImports,
-    sortComponentProps
-  ]
+  if (isVue) {
+    return [
+      setLineRows,
+      sortImports,
+      sortComponentProps
+    ]
+  }
+  return [setLineRows, sortImports]
 }
 
 const neat = context => {
