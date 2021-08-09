@@ -8,10 +8,12 @@ import sortBy from 'lodash.sortby'
 import { parse as acorn } from 'acorn'
 import { parse as acornLoose } from 'acorn-loose'
 import { program } from 'commander'
+import compose from './compose'
 
 export {
   acorn,
   acornLoose,
+  compose,
   fs,
   get,
   groupBy,

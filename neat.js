@@ -2,12 +2,12 @@
 import {
   acorn,
   acornLoose,
+  compose,
   fs,
   minimist,
   path,
   program,
 } from './utils/index'
-import compose from './compose'
 import setLineRows from './setLineRows'
 import sortVueComponents from './vue/sortComponents'
 import sortVueProps from './vue/sortProps'
