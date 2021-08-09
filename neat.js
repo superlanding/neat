@@ -5,6 +5,7 @@ import {
   fs,
   minimist,
   path,
+  program,
   util
 } from './utils/index'
 import compose from './compose'
@@ -13,11 +14,11 @@ import sortComponentProps from './sortComponentProps'
 import sortImports from './sortImports'
 
 const getComposedFns = context => {
-  const { argv } = context
-  if (argv['sort-imports']) {
+  const { options } = context
+  if (options.imports) {
     return [setLineRows, sortImports]
   }
-  if (argv['sort-component-props']) {
+  if (options.componentProps) {
     return [setLineRows, sortComponentProps]
   }
   return [
@@ -51,9 +52,17 @@ const neat = context => {
   fs.writeFileSync(context.filePath, fileContent, 'utf8')
 }
 
+program
+  .option('-i, --imports', 'sort js import declarations')
+  .option('-c, --component-props', 'sort vue component props')
+  .option('-l, --loose', 'use the error-tolerant version of parser')
+
+const { argv } = process
+program.parse(argv)
+
 const cwd = process.cwd()
-const argv = minimist(process.argv.slice(2))
-const filePaths = argv._
+const args = minimist(argv.slice(2))
+const filePaths = args._
   .filter(filename => (! filename.includes('*')))
   .map(filename => path.resolve(cwd, filename))
   .flat()
@@ -61,13 +70,14 @@ const filePaths = argv._
 filePaths.forEach(filePath => {
   const content = fs.readFileSync(filePath, 'utf8')
   const ext = path.extname(filePath)
-  const parse = argv.loose ? acornLoose : acorn
+  const options = program.opts()
+  const parse = options.loose ? acornLoose : acorn
   const parserContext = {
     filePath,
     ext,
     source: content,
     content,
-    argv,
+    options,
     parse: code => parse(code, {
       ecmaVersion: 2020,
       sourceType: 'module'
