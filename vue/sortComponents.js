@@ -18,15 +18,13 @@ const getSortedObjValues = (group, code) => {
 }
 
 const sortComponentProps = (valueNode, code) => {
-  const { start, end } = valueNode
+
   const group = groupBy(valueNode.properties, 'shorthand')
-
-  const before = code.slice(0, start)
+  const before = code.slice(0, valueNode.start)
   const middle = getSortedObjValues(group, code)
-  const after = code.slice(end)
+  const after = code.slice(valueNode.end)
 
-  const nextCode = before + middle + after
-  return nextCode
+  return  before + middle + after
 }
 
 export default function sortComponents(context) {
