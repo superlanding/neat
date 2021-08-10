@@ -14,11 +14,15 @@ import sortVueProps from './vue/sortProps'
 import sortVueComputedProps from './vue/sortComputedProps'
 import sortVueMethods from './vue/sortMethods'
 import sortImports from './sortImports'
+import rmTrailingSpaces from './rmTrailingSpaces'
 
 const getComposedFns = context => {
   const { options, isVue } = context
   if (options.imports) {
     return [setLineRows, sortImports]
+  }
+  if (options.trailingSpaces) {
+    return [rmTrailingSpaces]
   }
   if (options.componentProps && isVue) {
     return [setLineRows, sortVueComponents]
@@ -76,6 +80,7 @@ program
   .option('-p, --props', 'sort vue props')
   .option('-d, --computed-props', 'sort vue computed props')
   .option('-m, --methods', 'sort vue methods props')
+  .option('-t, --trailing-spaces', 'remove trailing spaces')
   .option('-l, --loose', 'use the error-tolerant version of parser')
 
 const { argv } = process
