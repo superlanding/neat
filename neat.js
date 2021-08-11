@@ -4,7 +4,6 @@ import {
   acornLoose,
   compose,
   fs,
-  minimist,
   path,
   program,
 } from './utils/index'
@@ -87,11 +86,9 @@ const { argv } = process
 program.parse(argv)
 
 const cwd = process.cwd()
-const args = minimist(argv.slice(2))
-const filePaths = args._
+const filePaths = program.args
   .filter(filename => (! filename.includes('*')))
   .map(filename => path.resolve(cwd, filename))
-  .flat()
 
 filePaths.forEach(filePath => {
   const content = fs.readFileSync(filePath, 'utf8')
