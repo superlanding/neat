@@ -48,6 +48,9 @@ const getComposedFns = context => {
   return [setLineRows, sortImports]
 }
 
+const setupScriptStartTag = '<script setup>'
+const isSetupScript = content => content.includes(setupScriptStartTag)
+
 const neat = context => {
 
   const { content } = context
@@ -56,7 +59,7 @@ const neat = context => {
   let afterJs = ''
 
   if (context.isVue) {
-    const startTag = '<script>'
+    const startTag = isSetupScript(content) ? setupScriptStartTag : '<script>'
     const endTag = '</script>'
     const scriptStart = content.indexOf(startTag) + startTag.length
     const scriptEnd = content.indexOf(endTag)
