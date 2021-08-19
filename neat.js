@@ -111,5 +111,10 @@ filePaths.forEach(filePath => {
     }),
     rows: []
   }
-  neat(parserContext)
+  try {
+    neat(parserContext)
+  }
+  catch (err) {
+    console.error(`Unexpected error in ${filePath}: ${err}`)
+  }
 })
