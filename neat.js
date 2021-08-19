@@ -61,7 +61,12 @@ const neat = context => {
   if (context.isVue) {
     const startTag = isSetupScript(content) ? setupScriptStartTag : '<script>'
     const endTag = '</script>'
-    const scriptStart = content.indexOf(startTag) + startTag.length
+    const scriptStartIndex = content.indexOf(startTag)
+    // skip if no script tag is present
+    if (scriptStartIndex === -1) {
+      return
+    }
+    const scriptStart = scriptStartIndex + startTag.length
     const scriptEnd = content.indexOf(endTag)
     context.content = content.slice(scriptStart, scriptEnd)
     beforeJs = content.slice(0, scriptStart)
