@@ -1,6 +1,7 @@
 import {
   IMPORT_TYPE_CONTAINER,
   IMPORT_TYPE_COMPONENT,
+  IMPORT_TYPE_INLINE_SVG,
   IMPORT_TYPE_MIXIN,
   IMPORT_TYPE_REDUCER,
   IMPORT_TYPE_MODEL,
@@ -18,6 +19,9 @@ export default function getImportType(node, line) {
   }
   if (line.includes('/components')) {
     return IMPORT_TYPE_COMPONENT
+  }
+  if (line.includes('/svgs')) {
+    return IMPORT_TYPE_INLINE_SVG
   }
   if (line.includes('/mixins')) {
     return IMPORT_TYPE_MIXIN
