@@ -93,6 +93,13 @@ program
 const { argv } = process
 program.parse(argv)
 
+const options = program.opts()
+const parseFn = options.loose ? acornLoose : acorn
+const parse = code => parseFn(code, {
+  ecmaVersion: 2020,
+  sourceType: 'module'
+})
+
 const cwd = process.cwd()
 const filePaths = program.args
   .filter(filename => (! filename.includes('*')))
@@ -101,8 +108,6 @@ const filePaths = program.args
 filePaths.forEach(filePath => {
   const content = fs.readFileSync(filePath, 'utf8')
   const ext = path.extname(filePath)
-  const options = program.opts()
-  const parse = options.loose ? acornLoose : acorn
   const parserContext = {
     filePath,
     ext,
@@ -110,10 +115,7 @@ filePaths.forEach(filePath => {
     source: content,
     content,
     options,
-    parse: code => parse(code, {
-      ecmaVersion: 2020,
-      sourceType: 'module'
-    }),
+    parse,
     rows: []
   }
   try {
